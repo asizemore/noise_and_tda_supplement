@@ -13,23 +13,25 @@
 
 
         console.log("hello")
+        console.log("new")
 
 
 
 
-        d3.json("../data/foo4_triangle.json", function(error, dict) {
-        // d3.json("files/theme/foo4_triangle.json", function(error, dict) {
+
+        d3.json("../data/foo4_clique.json", function(error, dict) {
 
             if (error) throw error;
 
             console.log(dict)
+
 
            
             const models = Object.keys(dict)
             console.log(models)
             console.log("hello")
 
-            let model = "wprobTriangle"
+            let model = "clique20"
             console.log(dict[model])
 
 
@@ -244,6 +246,7 @@
                 console.log(model)
                 edge_num = Number(threshold_vals[value_edge]);
                 update_threshold_plot(dict[model][edge_num], edge_num);
+
 
 
                 // Set input to appropriate value

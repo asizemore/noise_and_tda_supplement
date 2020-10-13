@@ -357,6 +357,11 @@
                     edge_num = Number(threshold_vals[value_edge]);
                     update_threshold_plot(dict[model][edge_num],dict_no[model][edge_num], edge_num);
 
+
+                    // Set input to appropriate value
+                    let slider_bar = document.getElementById("slider-range");
+                    slider_bar.value = value_edge;
+
                 };
 
                 let back_button = function() {
@@ -368,6 +373,11 @@
                     edge_num = Number(threshold_vals[value_edge]);
                     update_threshold_plot(dict[model][edge_num],dict_no[model][edge_num], edge_num);
 
+
+                    // Set input to appropriate value
+                    let slider_bar = document.getElementById("slider-range");
+                    slider_bar.value = value_edge;
+
             };
 
 
@@ -377,6 +387,8 @@
                     console.log(edge_num)
 
                     update_threshold_plot(dict[model][edge_num],dict_no[model][edge_num], edge_num);
+
+
                     
                 };
 

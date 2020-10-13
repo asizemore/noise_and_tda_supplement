@@ -13,16 +13,18 @@
 
 
         console.log("hello")
+        console.log("new")
 
 
 
 
-        // d3.json("../processed_data/foo4_clique.json", function(error, dict) {
+
         d3.json("../data/foo4_clique.json", function(error, dict) {
 
             if (error) throw error;
 
             console.log(dict)
+
 
            
             const models = Object.keys(dict)

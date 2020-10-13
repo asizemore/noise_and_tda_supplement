@@ -18,14 +18,14 @@
 
 
         // d3.json("files/theme/foo4.json", function(error, dict) {
-        d3.json("../processed_data/foo4.json", function(error, dict) {
+        d3.json("data/foo4.json", function(error, dict) {
 
             if (error) throw error;
 
             console.log(dict)
 
             // d3.json("files/theme/foo4_randomized.json", function(error, dict_rand) {
-            d3.json("../processed_data/foo4_randomized.json", function(error, dict_rand) {
+            d3.json("data/foo4_randomized.json", function(error, dict_rand) {
 
                 if (error) throw error;
 

@@ -11,7 +11,7 @@
 
         const axis_scale = d3.scaleLinear();
         axis_scale.domain([0, 12]);
-        axis_scale.range([60, width-60]);
+        axis_scale.range([100, width-60]);
 
         // Set colormaps
         const color_scale_correct = d3.scaleSequential().domain([1,100])
@@ -39,6 +39,7 @@
             let position_map = new Map(position_scale);
             console.log(position_map)
 
+
             // Pick one threshold, create matrix
             let visible_threshold = "thresh05";
 
@@ -52,17 +53,36 @@
                     .attr("y",function(d) {return position_map.get(d.TP.split("_")[0]);})
                     .attr("width", box_s)
                     .attr("height",box_s)
-                    .attr("rx",3)
-                    .attr("fill",function(d) {console.log(d.thresh05); return color_scale(d.thresh05);});
+                    .attr("fill","teal")
+                    .attr("stroke","white")
+                    .attr("stroke-width", 0.5)
+                    .attr("stroke-opacity", 0.5)
+                    .style("fill-opacity", function(d) {console.log(d[visible_threshold]/100); return d[visible_threshold]/100});
 
             // Write names
-            // CURRENTLY THIS OVERWRITES NAMES MULTIPLE TIMES
-            let predicted_names = svg.append("g")
+            // REPLACE WITH D3 AXES
+            const predicted_names = svg.append("g")
             predicted_names.selectAll("text")
-                .data(data)
+                .data(model_names)
                 .enter()
                 .append("text")
-                    .text(function(d))
+                    .text(function(d) {return d})
+                    .attr("fill", "white")
+                    .attr("x",function(d) {return position_map.get(d) + box_s/2;})
+                    .attr("y",95)
+                    .attr("text-anchor","middle");
+
+            const correct_names = svg.append("g")
+            correct_names.selectAll("text")
+                .data(model_names)
+                .enter()
+                .append("text")
+                    .text(function(d) {return d})
+                    .attr("fill", "white")
+                    .attr("y",function(d) {return position_map.get(d)+box_s/2;})
+                    .attr("x",95)
+                    .attr("text-anchor","end");
+
 
 
 

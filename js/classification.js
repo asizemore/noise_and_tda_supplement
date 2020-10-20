@@ -53,7 +53,7 @@
                     .attr("y",function(d) {return position_map.get(d.TP.split("_")[0]);})
                     .attr("width", box_s)
                     .attr("height",box_s)
-                    .attr("fill","teal")
+                    .attr("fill",function(d) {return (d.TP.split("_")[0] === d.TP.split("_")[1]) ? "teal" : "pink";})
                     .attr("stroke","white")
                     .attr("stroke-width", 0.5)
                     .attr("stroke-opacity", 0.5)

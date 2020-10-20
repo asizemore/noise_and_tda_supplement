@@ -12,6 +12,7 @@
 .Rhistory
 .sif
 .bash_history
+*.csv
 
 
 # <<< Python >>>

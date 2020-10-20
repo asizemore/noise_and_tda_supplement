@@ -79,12 +79,16 @@
 
                 // Draw boxes
                 let boxes = svg.append("g")
+
+
+                
                 boxes.selectAll("g")
                     .data(data)
                     .enter()
                     .append("rect")
                         .attr("x",function(d) {return position_map.get(d.TP.split("_")[1]);})
                         .attr("y",function(d) {return position_map.get(d.TP.split("_")[0]);})
+                        .attr("class","boxes")
                         .attr("width", box_s)
                         .attr("height",box_s)
                         .attr("fill",function(d) {return (d.TP.split("_")[0] === d.TP.split("_")[1]) ? "teal" : "pink";})
@@ -95,6 +99,10 @@
                         .on("mouseover", mouseover)
                         .on("mouseout", mouseout)
                         .on("click",onclick);
+
+                let box_text;
+
+                
 
                 // Write names
                 // REPLACE WITH D3 AXES
@@ -126,11 +134,23 @@
                     // d3.select(this).transition().duration(50).attr("stroke-width",2)
                     d3.select(this).transition().duration(50).attr("stroke-opacity",1).attr("stroke-width", 2);
 
+                    box_text = svg.append("text")
+                            .text(d[visible_threshold])
+                            .attr("id","hover-text")
+                            .attr("x",position_map.get(d.TP.split("_")[1]) + box_s/2)
+                            .attr("y",position_map.get(d.TP.split("_")[0]) + box_s/2 + 4)
+                            .attr("fill", "white")
+                            .style("text-anchor","middle");
+
+
+                    
+
                 };
 
                 function mouseout(d) {
 
                     d3.select(this).transition().duration(50).attr("stroke-opacity",0.5).attr("stroke-width", 0.5);
+                    d3.select("#hover-text").remove();
 
 
                 };

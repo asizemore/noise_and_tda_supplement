@@ -20,6 +20,11 @@
             .interpolator(d3.interpolateReds);
 
 
+        // Prepare the comparison div
+        const div_pair = d3.select("#pair-graphs-div");
+        div_pair.attr("opacity",0);
+
+
 
             
 
@@ -57,7 +62,9 @@
                     .attr("stroke","white")
                     .attr("stroke-width", 0.5)
                     .attr("stroke-opacity", 0.5)
-                    .style("fill-opacity", function(d) {console.log(d[visible_threshold]/100); return d[visible_threshold]/100});
+                    .style("fill-opacity", function(d) {console.log(d[visible_threshold]/100); return d[visible_threshold]/100})
+                    .on("mouseover", mouseover)
+                    .on("mouseout", mouseout);
 
             // Write names
             // REPLACE WITH D3 AXES
@@ -82,6 +89,28 @@
                     .attr("y",function(d) {return position_map.get(d)+box_s/2;})
                     .attr("x",95)
                     .attr("text-anchor","end");
+
+
+            function mouseover(d) {
+
+                // d3.select(this).transition().duration(50).attr("stroke-width",2)
+                d3.select(this).transition().duration(50).attr("stroke-opacity",1).attr("stroke-width", 2);
+
+                // Make the div visible
+                div_pair.transition()
+                .duration('50')
+                .style("opacity", 1)
+            };
+
+            function mouseout(d) {
+
+                d3.select(this).transition().duration(50).attr("stroke-opacity",0.5).attr("stroke-width", 0.5);
+
+
+            }
+
+
+            
 
 
 

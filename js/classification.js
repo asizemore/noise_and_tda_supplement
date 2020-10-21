@@ -135,7 +135,6 @@
 
                 function mouseover(d) {
 
-                    // d3.select(this).transition().duration(50).attr("stroke-width",2)
                     d3.select(this).transition().duration(50).attr("stroke-opacity",1).attr("stroke-width", 2);
 
                     box_text = svg.append("text")
@@ -146,6 +145,8 @@
                             .attr("fill", "white")
                             .style("text-anchor","middle");
 
+                    console.log(box_text);
+
 
                     
 
@@ -154,7 +155,10 @@
                 function mouseout(d) {
 
                     d3.select(this).transition().duration(50).attr("stroke-opacity",0.5).attr("stroke-width", 0.5);
-                    d3.select("#hover-text").remove();
+                    d3.selectAll("#hover-text").remove();
+                    // box_text = null;
+
+                    console.log(box_text);
 
 
                 };
@@ -223,8 +227,26 @@
         
                 function onclick(d) {
         
-                    // Highlight clicked box
-                    d3.select(this).transition().duration(50).attr("stroke-opacity",1).attr("stroke-width", 2);
+
+                    // Replace and update box stroke properties
+                    d3.selectAll(".boxes").transition().duration(50).attr("stroke-opacity",0.5).attr("stroke-width", 0.5).attr("rx",0);
+                    d3.select(this).transition().duration(50).attr("stroke-opacity",1).attr("stroke-width", 5).attr("rx",4);
+
+                    // Replace mouseout event
+                    d3.selectAll(".boxes").on("mouseout",mouseout)
+                    d3.select(this).on("mouseout", null);
+                    d3.selectAll(".boxes").on("mouseover",mouseover)
+                    d3.select(this).on("mouseover", null);
+
+                    // Update accuracy text
+                    d3.selectAll("#click-text").remove();
+                    svg.append("text")
+                            .text(d[visible_threshold])
+                            .attr("id","click-text")
+                            .attr("x",position_map.get(d.TP.split("_")[1]) + box_s/2)
+                            .attr("y",position_map.get(d.TP.split("_")[0]) + box_s/2 + 4)
+                            .attr("fill", "white")
+                            .style("text-anchor","middle");
 
                     // Redefine g_1, g_2
                     g_1 = d.TP.split("_")[0];
@@ -239,6 +261,7 @@
                     .duration('50')
                     .style("opacity", 1)
         
+                    console.log(box_text);
         
                 };
         

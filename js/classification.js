@@ -56,6 +56,11 @@
         const rho_vals = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9];
 
 
+        // Pick one threshold, create matrix
+        let visible_threshold = "thresh05";
+        let visible_edge = "1208";
+        let g_1 = model_names[1];
+        let g_2 = model_names[2];
 
 
             
@@ -75,9 +80,6 @@
                 console.log(position_map)
 
 
-                // Pick one threshold, create matrix
-                let visible_threshold = "thresh05";
-                let visible_edge = "1208";
 
                 // Draw boxes
                 let boxes = svg.append("g")
@@ -157,35 +159,35 @@
 
                 };
 
-                function onclick(d) {
-
-                    // Filter the data to contain only columns we care about
-                    console.log(bettis[d.TP.split("_")[0]][visible_edge])
-                    bettis1 = bettis[d.TP.split("_")[0]][visible_edge];
-                    bettis2 = bettis[d.TP.split("_")[1]][visible_edge];
-
+                function drawBettis(g_1,g_2,visible_edge) {
+        
+                    // bettis1 = bettis[d.TP.split("_")[0]][visible_edge];
+                    // bettis2 = bettis[d.TP.split("_")[1]][visible_edge];
+                    bettis1 = bettis[g_1][visible_edge];
+                    bettis2 = bettis[g_2][visible_edge];
+        
                     let lines1 = {line1: svg1.selectAll(".dim1_t").data([bettis1.dim1]),
                     line2: svg1.selectAll(".dim2_t").data([bettis1.dim2]),
                     line3: svg1.selectAll(".dim3_t").data([bettis1.dim3]),
                     line4: svg1.selectAll(".dim4_t").data([bettis1.dim4])};
-
+        
                     let lines2 = {line1: svg2.selectAll(".dim1_p").data([bettis2.dim1]),
                     line2: svg2.selectAll(".dim2_p").data([bettis2.dim2]),
                     line3: svg2.selectAll(".dim3_p").data([bettis2.dim3]),
                     line4: svg2.selectAll(".dim4_p").data([bettis2.dim4])};
-
+        
                     // Adjust y axis
                     let max_y = d3.max([d3.max(bettis1.dim1), d3.max(bettis1.dim2), d3.max(bettis1.dim3), d3.max(bettis1.dim4),
                         d3.max(bettis2.dim1), d3.max(bettis2.dim2), d3.max(bettis2.dim3), d3.max(bettis2.dim4)]);
-
+        
                     let buffer = max_y*(0.1);
-
-
+        
+        
                     
                     y_scale.domain([0, max_y+buffer]);
-
+        
                     for (let index = 0; index < 4; index++) {
-
+        
                                     lines1[`line${index+1}`].enter()
                                         .append("path")
                                             .attr("class","dims")
@@ -199,9 +201,9 @@
                                             .attr("stroke", betti_colors[index])
                                             .attr("fill", "none")
                                             .attr("stroke-width", 3);
-
-
-
+        
+        
+        
                                     lines2[`line${index+1}`].enter()
                                         .append("path")
                                             .attr("class","dims")
@@ -215,54 +217,69 @@
                                             .attr("stroke", betti_colors[index])
                                             .attr("fill", "none")
                                             .attr("stroke-width", 3);
-
+        
                     }
+                };
+        
+                function onclick(d) {
+        
+                    // Highlight clicked box
+                    d3.select(this).transition().duration(50).attr("stroke-opacity",1).attr("stroke-width", 2);
 
-
+                    // Redefine g_1, g_2
+                    g_1 = d.TP.split("_")[0];
+                    g_2 = d.TP.split("_")[1];
+        
+                    // Draw bettis
+                    drawBettis(g_1,g_2,visible_edge)
                     
-
-
+        
                     // Make the div visible
                     div_pair.transition()
                     .duration('50')
                     .style("opacity", 1)
-
+        
+        
+                };
+        
+                let changed = function() {
+                    value_edge = this.value;
+                    // console.log(rho_vals[value_edge].toString().replace(".", ""));
+        
+                    visible_threshold = "thresh"+rho_vals[value_edge].toString().replace(".", "");
+                    visible_edge = Math.round(rho_vals[value_edge]*2415);
+                    console.log(visible_edge)
+        
+                    d3.selectAll(".boxes")
+                        .transition()
+                        .ease(d3.easeLinear)           // control the speed of the transition
+                        .duration(200)
+                        .style("fill-opacity", function(d) { return d[visible_threshold]/100});
+        
+        
+                    // Draw bettis
+                    drawBettis(g_1,g_2,visible_edge)
 
                 };
-
-                console.log(bettis)
-
-
-
-
-
+        
+                // Input actions
+                d3.select("#slider-range")
+                    .on("input", changed)
+                    .on("change", changed);
 
 
+                
+                
+                
+                
+                
+                
+                
+                
+                
             }) 
         });
-
-
-        let changed = function() {
-            value_edge = this.value;
-            // console.log(rho_vals[value_edge].toString().replace(".", ""));
-
-            visible_threshold = "thresh"+rho_vals[value_edge].toString().replace(".", "");
-
-            d3.selectAll(".boxes")
-                .transition()
-                .ease(d3.easeLinear)           // control the speed of the transition
-                .duration(200)
-                .style("fill-opacity", function(d) { return d[visible_threshold]/100})
-
-
-
-
-        };
-
-        // Input actions
-        d3.select("#slider-range")
-            .on("input", changed)
-            .on("change", changed);
+        
 
 
 

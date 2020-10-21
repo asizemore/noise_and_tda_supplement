@@ -24,27 +24,36 @@
         const color_scale_incorrect = d3.scaleSequential().domain([1,100])
             .interpolator(d3.interpolateReds);
 
+            
 
-
-
-
-        // Prepare the comparison div
-        const div_pair = d3.select("#pair-graphs-div");
-        div_pair.attr("opacity",0);
-
+        
         // Set x and y scales
         let x_scale = d3.scaleLinear()
-            .domain([0, 1])
-            .range([50, svg_pair_s-50]);
-
+        .domain([0, 1])
+        .range([50, svg_pair_s-50]);
+        
         
         let y_scale = d3.scaleLinear().range([svg_pair_s-50,50]);
         let yAxis = d3.axisLeft().scale(y_scale);
-
+        
         svg1.append("g")
-            .attr("class","myYaxis")
-            .attr("transform", `translate(100,0)`);
-
+        .attr("id","yaxis")
+        .attr("class","axis")
+        .attr("transform", `translate(35,0)`);
+        
+        
+        // Draw axes
+        svg1.append("g")
+            .attr("class","axis")
+            .attr("transform", `translate(0, ${svg_pair_s-35})`)
+            .attr("opacity",0)
+            .call(d3.axisBottom(x_scale));
+    
+        svg2.append("g")
+            .attr("class","axis")
+            .attr("transform", `translate(0, ${svg_pair_s-35})`)
+            .attr("opacity",0)
+            .call(d3.axisBottom(x_scale));
 
         // Data things
         const nEdges = 2415;
@@ -145,8 +154,6 @@
                             .attr("fill", "white")
                             .style("text-anchor","middle");
 
-                    console.log(box_text);
-
 
                     
 
@@ -156,10 +163,7 @@
 
                     d3.select(this).transition().duration(50).attr("stroke-opacity",0.5).attr("stroke-width", 0.5);
                     d3.selectAll("#hover-text").remove();
-                    // box_text = null;
-
-                    console.log(box_text);
-
+  
 
                 };
 
@@ -189,6 +193,10 @@
         
                     
                     y_scale.domain([0, max_y+buffer]);
+                    svg1.selectAll("#yaxis")
+                        .transition()
+                        .duration(1000)
+                        .call(yAxis);
         
                     for (let index = 0; index < 4; index++) {
         
@@ -251,17 +259,21 @@
                     // Redefine g_1, g_2
                     g_1 = d.TP.split("_")[0];
                     g_2 = d.TP.split("_")[1];
-        
+
+                    // Show axes
+                    d3.selectAll(".axis")
+                        .attr("opacity",1);
+
                     // Draw bettis
                     drawBettis(g_1,g_2,visible_edge)
                     
         
-                    // Make the div visible
-                    div_pair.transition()
-                    .duration('50')
-                    .style("opacity", 1)
+                    // // Make the div visible
+                    // div_pair.transition()
+                    // .duration('50')
+                    // .style("opacity", 1)
         
-                    console.log(box_text);
+
         
                 };
         

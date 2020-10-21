@@ -68,6 +68,24 @@ div {
     pointer-events: none;
 }
 
+.axis text {
+    fill: white;
+}
+
+.axis line {
+    stroke: white;
+}
+
+.axis path {
+    stroke: white;
+}
+
+/* #yaxis text {
+    fill: white;
+} */
+
+
+
 
 
 

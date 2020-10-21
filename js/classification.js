@@ -45,19 +45,34 @@
         // Set x and y scales
         let x_scale = d3.scaleLinear()
         .domain([0, 1])
-        .range([80, svg_pair_s-10]);
+        .range([80, svg_pair_s-50]);
         
         
         let y_scale = d3.scaleLinear().range([svg_pair_s-60,40]);
-        let yAxis = d3.axisLeft().scale(y_scale);
+
         
         svg1.append("g")
-        .attr("id","yaxis")
+        .attr("id","yaxis1")
         .attr("class","axis")
         .attr("transform", `translate(65,0)`);
+
+        svg2.append("g")
+        .attr("id","yaxis2")
+        .attr("class","axis")
+        .attr("transform","translate(" + (svg_pair_s-35) + ",0)");
         
         
         // Draw axes
+        svg.append("text")
+            .attr("class","titles")
+            .attr("transform","translate(" + (width/2-20) + "," + 60 + ")")
+            .text("Predicted model")
+
+        svg.append("text")
+            .attr("class","titles")
+            .attr("transform","translate(" + 40 + "," + (height/2+20) + "),rotate(-90)")
+            .text("True model")
+
         svg1.append("g")
             .attr("class","axis")
             .attr("transform", `translate(0, ${svg_pair_s-45})`)
@@ -95,19 +110,20 @@
             .attr("opacity", 0)
             .text("β_k");
 
+
         svg1.append("text")
             .attr("class", "axis-labels")
             .attr("id","g1-title")
             .attr("transform", "translate(" + (svg_pair_s/2 + 35) + "," + 20 + ")")
             .attr("opacity",0)
-            .text(g_1)
+            .text("True model: " + g_1);
 
         svg2.append("text")
             .attr("class", "axis-labels")
             .attr("id", "g2-title")
             .attr("transform", "translate(" + (svg_pair_s/2 + 35) + "," + 20 + ")")
             .attr("opacity",0)
-            .text(g_2)
+            .text("True model: " + g_2);
 
 
 
@@ -232,10 +248,15 @@
         
                     
                     y_scale.domain([0, max_y+buffer]);
-                    svg1.selectAll("#yaxis")
+                    svg1.selectAll("#yaxis1")
                         .transition()
                         .duration(1000)
-                        .call(yAxis);
+                        .call(d3.axisLeft().scale(y_scale));
+                    
+                    svg2.selectAll("#yaxis2")
+                        .transition()
+                        .duration(1000)
+                        .call(d3.axisRight().scale(y_scale));
         
                     for (let index = 0; index < 4; index++) {
         
@@ -307,9 +328,9 @@
 
                     // Rewrite titles
                     d3.select("#g1-title")
-                        .text(g_1)
+                        .text("True model: " + g_1)
                     d3.select("#g2-title")
-                        .text(g_2)
+                        .text("Predicted model: " + g_2)
 
                     // Draw bettis
                     drawBettis(g_1,g_2,visible_edge)

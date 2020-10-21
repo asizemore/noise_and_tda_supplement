@@ -11,8 +11,23 @@
 
 
         const width = +svg.attr("width"),
-            height = +svg.attr("height"),
-            activeClassName = 'active-d3-item';
+        height = +svg.attr("height")
+
+        // Data things
+        const nEdges = 2415;
+        const betti_colors = ["#243A4C", "#406372", "#66939E", "#9BC3C6"];
+
+        // UPDATE LATER
+        const model_names = ["IID","assortative","coreperiphery", "cosineGeometric","disassortative", "discreteUniform","dotProduct", "geometricConf", "randomGeometric", "ringLattice", "rmsd", "squaredEuclidean" ];
+        const model_abbrevs = ["IID", "ast", "cp", "cosG", "dast", "disU", "dp", "geom","rg", "rl", "rmsd", "se"];
+        const rho_vals = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9];
+
+
+        // Pick one threshold, create matrix
+        let visible_threshold = "thresh05";
+        let visible_edge = "1208";
+        let g_1 = model_names[1];
+        let g_2 = model_names[2];
 
         const axis_scale = d3.scaleLinear();
         axis_scale.domain([0, 12]);
@@ -30,46 +45,70 @@
         // Set x and y scales
         let x_scale = d3.scaleLinear()
         .domain([0, 1])
-        .range([50, svg_pair_s-50]);
+        .range([80, svg_pair_s-10]);
         
         
-        let y_scale = d3.scaleLinear().range([svg_pair_s-50,50]);
+        let y_scale = d3.scaleLinear().range([svg_pair_s-60,40]);
         let yAxis = d3.axisLeft().scale(y_scale);
         
         svg1.append("g")
         .attr("id","yaxis")
         .attr("class","axis")
-        .attr("transform", `translate(35,0)`);
+        .attr("transform", `translate(65,0)`);
         
         
         // Draw axes
         svg1.append("g")
             .attr("class","axis")
-            .attr("transform", `translate(0, ${svg_pair_s-35})`)
+            .attr("transform", `translate(0, ${svg_pair_s-45})`)
             .attr("opacity",0)
             .call(d3.axisBottom(x_scale));
     
         svg2.append("g")
             .attr("class","axis")
-            .attr("transform", `translate(0, ${svg_pair_s-35})`)
+            .attr("transform", `translate(0, ${svg_pair_s-45})`)
             .attr("opacity",0)
             .call(d3.axisBottom(x_scale));
 
-        // Data things
-        const nEdges = 2415;
-        const betti_colors = ["#243A4C", "#406372", "#66939E", "#9BC3C6"];
+        let margin = 10;
+        svg1.append("text") 
+            .attr("class","axis-labels")            
+            .attr("transform",
+                    "translate(" + (svg_pair_s/2 + 35) + " ," + 
+                                (svg_pair_s - margin) + ")")
+            .attr("opacity", 0)
+            .text("Edge density");
 
-        // UPDATE LATER
-        const model_names = ["IID","assortative","coreperiphery", "cosineGeometric","disassortative", "discreteUniform","dotProduct", "geometricConf", "randomGeometric", "ringLattice", "rmsd", "squaredEuclidean" ];
-        const model_abbrevs = ["IID", "ast", "cp", "cosG", "dast", "disU", "dp", "geom","rg", "rl", "rmsd", "se"];
-        const rho_vals = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9];
+        svg2.append("text") 
+            .attr("class","axis-labels")            
+            .attr("transform",
+                    "translate(" + (svg_pair_s/2 + 35) + " ," + 
+                                (svg_pair_s - margin) + ")")
+            .attr("opacity", 0)
+            .text("Edge density");
 
+        svg1.append("text") 
+            .attr("class","axis-labels")            
+            .attr("transform",
+                    "translate(" + 10 + " ," + 
+                                (svg_pair_s/2) + ")")
+            .attr("opacity", 0)
+            .text("β_k");
 
-        // Pick one threshold, create matrix
-        let visible_threshold = "thresh05";
-        let visible_edge = "1208";
-        let g_1 = model_names[1];
-        let g_2 = model_names[2];
+        svg1.append("text")
+            .attr("class", "axis-labels")
+            .attr("id","g1-title")
+            .attr("transform", "translate(" + (svg_pair_s/2 + 35) + "," + 20 + ")")
+            .attr("opacity",0)
+            .text(g_1)
+
+        svg2.append("text")
+            .attr("class", "axis-labels")
+            .attr("id", "g2-title")
+            .attr("transform", "translate(" + (svg_pair_s/2 + 35) + "," + 20 + ")")
+            .attr("opacity",0)
+            .text(g_2)
+
 
 
             
@@ -262,7 +301,15 @@
 
                     // Show axes
                     d3.selectAll(".axis")
-                        .attr("opacity",1);
+                        .attr("opacity", 1);
+                    d3.selectAll(".axis-labels")
+                        .attr("opacity", 1);
+
+                    // Rewrite titles
+                    d3.select("#g1-title")
+                        .text(g_1)
+                    d3.select("#g2-title")
+                        .text(g_2)
 
                     // Draw bettis
                     drawBettis(g_1,g_2,visible_edge)

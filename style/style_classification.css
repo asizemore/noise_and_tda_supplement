@@ -80,10 +80,10 @@ div {
     stroke: white;
 }
 
-/* #yaxis text {
+.axis-labels {
     fill: white;
-} */
-
+    text-anchor: middle;
+}
 
 
 

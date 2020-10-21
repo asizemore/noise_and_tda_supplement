@@ -50,6 +50,12 @@
         const nEdges = 2415;
         const betti_colors = ["#243A4C", "#406372", "#66939E", "#9BC3C6"];
 
+        // UPDATE LATER
+        const model_names = ["IID","assortative","coreperiphery", "cosineGeometric","disassortative", "discreteUniform","dotProduct", "geometricConf", "randomGeometric", "ringLattice", "rmsd", "squaredEuclidean" ];
+        const model_abbrevs = ["IID", "ast", "cp", "cosG", "dast", "disU", "dp", "geom","rg", "rl", "rmsd", "se"];
+        const rho_vals = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9];
+
+
 
 
             
@@ -59,10 +65,6 @@
             d3.json("../data/foo4.json", function(error, bettis) {
             
 
-
-                // UPDATE LATER
-                const model_names = ["IID","assortative","coreperiphery", "cosineGeometric","disassortative", "discreteUniform","dotProduct", "geometricConf", "randomGeometric", "ringLattice", "rmsd", "squaredEuclidean" ];
-                const model_abbrevs = ["IID", "ast", "cp", "cosG", "dast", "disU", "dp", "geom","rg", "rl", "rmsd", "se"];
 
                 const nModels = Math.sqrt(data.length);
                 const box_s = 35;
@@ -237,7 +239,31 @@
 
 
             }) 
-        })
+        });
+
+
+        let changed = function() {
+            value_edge = this.value;
+            // console.log(rho_vals[value_edge].toString().replace(".", ""));
+
+            visible_threshold = "thresh"+rho_vals[value_edge].toString().replace(".", "");
+
+            d3.selectAll(".boxes")
+                .transition()
+                .ease(d3.easeLinear)           // control the speed of the transition
+                .duration(200)
+                .style("fill-opacity", function(d) { return d[visible_threshold]/100})
+
+
+
+
+        };
+
+        // Input actions
+        d3.select("#slider-range")
+            .on("input", changed)
+            .on("change", changed);
+
 
 
 

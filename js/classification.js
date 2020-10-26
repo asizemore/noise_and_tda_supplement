@@ -131,7 +131,7 @@
 
 
         d3.csv("../data/test.csv", function(error, data) {
-            d3.json("../data/foo4.json", function(error, bettis) {
+            d3.json("../data/foo4b.json", function(error, bettis) {
             
 
 
@@ -142,6 +142,8 @@
                 console.log(position_scale)
                 let position_map = new Map(position_scale);
                 console.log(position_map)
+
+                console.log(bettis)
 
 
 
@@ -173,7 +175,6 @@
                 
 
                 // Write names
-                // REPLACE WITH D3 AXES
                 const predicted_names = svg.append("g")
                 predicted_names.selectAll("text")
                     .data(model_abbrevs)
@@ -226,6 +227,8 @@
         
                     // bettis1 = bettis[d.TP.split("_")[0]][visible_edge];
                     // bettis2 = bettis[d.TP.split("_")[1]][visible_edge];
+                    console.log(g_1)
+                    console.log(g_2)
                     bettis1 = bettis[g_1][visible_edge];
                     bettis2 = bettis[g_2][visible_edge];
         

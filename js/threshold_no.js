@@ -14,22 +14,27 @@
 
         console.log("hello")
 
+        // Data things
+        const nEdges = 604;
+        const nEdges_total = 2415;
+        const betti_colors = ["#243A4C", "#406372", "#66939E", "#9BC3C6"];
+        const real_color = "#B48677";
+        const noise_color = "#BFA658";
 
 
 
-        d3.json("../data/foo4.json", function(error, dict) {
+
+        d3.json("../data/main_k4_stdev.json", function(error, dict) {
             // d3.json("../processed_data/foo4.json", function(error, dict) {
 
             if (error) throw error;
 
-            console.log(dict)
 
-            d3.json("../data/foo4_noiseOnly.json", function(error, dict_no) {
+            d3.json("../data/noiseOnly_k4_stdev.json", function(error, dict_no) {
             // d3.json("../processed_data/foo4_noiseOnly.json", function(error, dict_no) {
 
                 if (error) throw error;
 
-                console.log(dict_no)
                     
                 
 
@@ -38,7 +43,6 @@
                 console.log("hello")
 
                 let model = "cosineGeometric"
-                console.log(dict[model])
 
 
                 // Pick one threshold and draw on the svg
@@ -98,7 +102,7 @@
                             "translate(" + (margin) + " ," + 
                                         (height/2) + ")")
                     .style("text-anchor", "middle")
-                    .text("β");
+                    .text("β_k");
 
                 
                 // Draw line graph
@@ -140,12 +144,6 @@
 
                 
 
-
-                // Draw data
-                const betti_colors = ["#243A4C", "#406372", "#66939E", "#9BC3C6"];
-                const real_color = "#B48677";
-                const noise_color = "#BFA658";
-                const nEdges = 2415;
 
                 const update_threshold_plot = (data, data_no, threshold_edge) => {
 
@@ -285,7 +283,8 @@
                         .attr("d", function(d) {console.log(d); return `M ${x_scale(d/2415)} ${y_scale(0)} L ${x_scale(d/2415)} ${y_scale(max_y+buffer)}`})
                         .attr("stroke", "black")
                         .attr("stroke-width", 2)
-                        .attr("opacity", 1);
+                        .attr("opacity", 1)
+                        .attr("stroke-dasharray", "10,10");
 
                     let model_rect = svg.selectAll(".real-rect").data([threshold_edge])
                     model_rect.enter()
@@ -298,7 +297,7 @@
                         .attr("y", `${height - 70}`)
                         .attr("height", 7)
                         .attr("fill", real_color)
-                        .attr("width", function() {return x_scale(threshold_edge/nEdges)- 100 - 5});
+                        .attr("width", function() {return x_scale(threshold_edge/nEdges_total)- 100 - 5});
 
                     let noise_rect = svg.selectAll(".noise-rect").data([threshold_edge])
                     noise_rect.enter()
@@ -307,11 +306,11 @@
                         .merge(svg.selectAll(".noise-rect"))
                         .transition()
                         .duration(1000)
-                        .attr("x", function() {return 5+ x_scale(threshold_edge/nEdges)})
+                        .attr("x", function() {return 5+ x_scale(threshold_edge/nEdges_total)})
                         .attr("y", `${height - 70}`)
                         .attr("height", 7)
                         .attr("fill", noise_color)
-                        .attr("width", function() {return 500 - x_scale(threshold_edge/nEdges)});
+                        .attr("width", function() {return 500 - x_scale(threshold_edge/nEdges_total)});
 
                     let noise_rect_no = svg_no.selectAll(".noise-rect").data([threshold_edge])
                     noise_rect_no.enter()
@@ -324,7 +323,7 @@
                         .attr("y", `${height - 70}`)
                         .attr("height", 7)
                         .attr("fill", noise_color)
-                        .attr("width", function() {return x_scale((nEdges - threshold_edge)/nEdges) - 100});
+                        .attr("width", function() {return x_scale((nEdges_total - threshold_edge)/nEdges_total) - 100});
 
 
 
@@ -403,7 +402,7 @@
 
 
                 
-                var dropdown = d3.select("#dropdown")
+                let dropdown = d3.select("#dropdown")
                     .insert("select", "svg")
                     .on("change", dropdownChange);
 
@@ -414,6 +413,9 @@
                     .text(function (d) {
                         return d[0].toUpperCase() + d.slice(1,d.length); // capitalize 1st letter
                     });
+
+                dropdown.append("text")
+                    .text("Model")
 
                 d3.select("#next-button")
                     .on("click",next_button)

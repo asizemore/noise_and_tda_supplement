@@ -92,19 +92,11 @@ ul {
     margin: 0 auto;
 }
 
-
-/* #button-div {
-    text-align: center;
-    display: grid;
-    grid-gap: 1rem;
-    
-} */
-/* 
-#button-div button {
+button {
     background-color: rgba(0,0,0,0);
     border:0.1em solid black;
-    padding:0.35em 1.2em;
-    margin:0 0.3em 0.3em 0;
+    padding:0.15em 1.2em;
+    margin:0 0.1em 0.1em 0;
     border-radius:0.12em;
     box-sizing: border-box;
     color: gray;
@@ -114,11 +106,12 @@ ul {
     font-size: 15px;
 }
 
-#button-div button:hover {
+button:hover {
     color:white;
     background-color:black;
     
-} */
+}
+
 
 #hover-text {
     pointer-events: none;

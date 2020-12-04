@@ -68,5 +68,20 @@ button:hover {
     margin-top: 70px;
 }
 
+#info-div {
+    width: 100%;
+    float: left;
+    padding-top: 70px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#info-div-text {
+    font-size: 30px;
+    margin: 0 auto;
+    width: 80%;
+    text-align: center;
+}
+
 
 

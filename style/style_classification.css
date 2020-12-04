@@ -1,0 +1,146 @@
+h1 {
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-weight: lighter;
+    color: gray;
+    font-size: 45px;
+    text-align: center;
+}
+
+h3 {
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-weight: lighter;
+    color: gray;
+    font-size: 25px;
+}
+
+div {
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    text-align: right;
+    font-weight: lighter;
+    color: gray;
+    font-size: 14px;
+    padding: 10px;
+}
+
+ul {
+    text-align: left;
+}
+
+#title-div {
+    text-align: center;
+}
+
+#plots-div {
+    float: left;
+    margin: auto;
+    clear: left;
+    width: 100%;
+    text-align: center;
+    line-height: normal;
+    vertical-align: middle;
+}
+
+#svg-div {
+    /* float: left; */
+    display: inline-block;
+    margin: auto;
+}
+
+#pair-graphs-div {
+    /* float: left; */
+    display: inline-block;
+    text-align: center;
+    margin: auto;
+    padding-top: 70px;
+    /* height: 600px; */
+    vertical-align: top;
+}
+
+#threshold-div {
+    /* width: 500px; */
+    /* height: 600px; */
+    /* float: left; */
+    display: inline-block;
+    clear: left;
+    /* line-height: 600px; */
+    /* padding-bottom: 100px; */
+    margin: 0 auto;
+    padding: 20px 100px;
+    text-align: center;
+    vertical-align: top;
+}
+
+#info-div {
+    width: 100%;
+    /* float: left; */
+    text-align: center;
+    margin: 0 auto;
+}
+
+#info-div-text {
+    font-size: 30px;
+    margin: 0 auto;
+    width: 80%;
+    text-align: center;
+}
+
+
+#list-div {
+    font-size: 24px;
+    width: 50%;
+    display: table;
+    margin: 0 auto;
+}
+
+
+/* #button-div {
+    text-align: center;
+    display: grid;
+    grid-gap: 1rem;
+    
+} */
+/* 
+#button-div button {
+    background-color: rgba(0,0,0,0);
+    border:0.1em solid black;
+    padding:0.35em 1.2em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.12em;
+    box-sizing: border-box;
+    color: gray;
+    transition: all 0.2s;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+}
+
+#button-div button:hover {
+    color:white;
+    background-color:black;
+    
+} */
+
+#hover-text {
+    pointer-events: none;
+}
+
+.axis text {
+    fill: white;
+}
+
+.axis line {
+    stroke: white;
+}
+
+.axis path {
+    stroke: white;
+}
+
+.axis-labels {
+    fill: white;
+    text-anchor: middle;
+}
+
+.titles {
+    fill: white;
+}

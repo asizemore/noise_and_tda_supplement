@@ -17,14 +17,14 @@
 
 
 
-        d3.json("data/foo4.json", function(error, dict) {
+        d3.json("../data/foo4.json", function(error, dict) {
             // d3.json("../processed_data/foo4.json", function(error, dict) {
 
             if (error) throw error;
 
             console.log(dict)
 
-            d3.json("data/foo4_noiseOnly.json", function(error, dict_no) {
+            d3.json("../data/foo4_noiseOnly.json", function(error, dict_no) {
             // d3.json("../processed_data/foo4_noiseOnly.json", function(error, dict_no) {
 
                 if (error) throw error;
@@ -282,9 +282,10 @@
                         .merge(d3.selectAll(".threshline"))
                         .transition()
                         .duration(1000)
-                        .attr("d", function(d) {console.log(d); return `M ${x_scale(d/nEdges)} ${y_scale(0)} L ${x_scale(d/nEdges)} ${y_scale(max_y+buffer)}`})
+                        .attr("d", function(d) {console.log(d); return `M ${x_scale(d/2415)} ${y_scale(0)} L ${x_scale(d/2415)} ${y_scale(max_y+buffer)}`})
                         .attr("stroke", "black")
-                        .attr("stroke-width", 2);
+                        .attr("stroke-width", 2)
+                        .attr("opacity", 1);
 
                     let model_rect = svg.selectAll(".real-rect").data([threshold_edge])
                     model_rect.enter()
@@ -357,6 +358,11 @@
                     edge_num = Number(threshold_vals[value_edge]);
                     update_threshold_plot(dict[model][edge_num],dict_no[model][edge_num], edge_num);
 
+
+                    // Set input to appropriate value
+                    let slider_bar = document.getElementById("slider-range");
+                    slider_bar.value = value_edge;
+
                 };
 
                 let back_button = function() {
@@ -368,6 +374,11 @@
                     edge_num = Number(threshold_vals[value_edge]);
                     update_threshold_plot(dict[model][edge_num],dict_no[model][edge_num], edge_num);
 
+
+                    // Set input to appropriate value
+                    let slider_bar = document.getElementById("slider-range");
+                    slider_bar.value = value_edge;
+
             };
 
 
@@ -377,6 +388,8 @@
                     console.log(edge_num)
 
                     update_threshold_plot(dict[model][edge_num],dict_no[model][edge_num], edge_num);
+
+
                     
                 };
 

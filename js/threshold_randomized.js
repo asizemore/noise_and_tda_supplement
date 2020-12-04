@@ -18,14 +18,14 @@
 
 
         // d3.json("files/theme/foo4.json", function(error, dict) {
-        d3.json("data/foo4.json", function(error, dict) {
+        d3.json("../data/foo4.json", function(error, dict) {
 
             if (error) throw error;
 
             console.log(dict)
 
             // d3.json("files/theme/foo4_randomized.json", function(error, dict_rand) {
-            d3.json("data/foo4_randomized.json", function(error, dict_rand) {
+            d3.json("../data/foo4_randomized.json", function(error, dict_rand) {
 
                 if (error) throw error;
 
@@ -381,6 +381,11 @@
                     edge_num = Number(threshold_vals[value_edge]);
                     update_threshold_plot(dict[model][edge_num],dict_rand[model][edge_num], edge_num);
 
+                    // Set input to appropriate value
+                    let slider_bar = document.getElementById("slider-range");
+                    slider_bar.value = value_edge;
+
+
                 };
 
                 let back_button = function() {
@@ -391,6 +396,11 @@
                     console.log(model)
                     edge_num = Number(threshold_vals[value_edge]);
                     update_threshold_plot(dict[model][edge_num],dict_rand[model][edge_num], edge_num);
+                    
+                    // Set input to appropriate value
+                    let slider_bar = document.getElementById("slider-range");
+                    slider_bar.value = value_edge;
+
 
             };
 

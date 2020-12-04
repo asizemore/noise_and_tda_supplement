@@ -3,6 +3,7 @@ h1 {
     font-weight: lighter;
     color: gray;
     font-size: 45px;
+    text-align: center;
 }
 
 h3 {
@@ -21,24 +22,84 @@ div {
     padding: 10px;
 }
 
+ul {
+    text-align: left;
+}
+
 #title-div {
     text-align: center;
 }
 
-#svg-div {
+#plots-div {
     float: left;
-    margin-left: 25%;
+    margin: auto;
+    clear: left;
+    width: 100%;
+    text-align: center;
+    line-height: normal;
+    vertical-align: middle;
+}
+
+#svg-div {
+    /* float: left; */
+    display: inline-block;
+    margin: auto;
+}
+
+#pair-graphs-div {
+    /* float: left; */
+    display: inline-block;
+    text-align: center;
+    margin: auto;
+    padding-top: 70px;
+    /* height: 600px; */
+    vertical-align: top;
+}
+
+#threshold-div {
+    /* width: 500px; */
+    /* height: 600px; */
+    /* float: left; */
+    display: inline-block;
+    clear: left;
+    /* line-height: 600px; */
+    /* padding-bottom: 100px; */
+    margin: 0 auto;
+    padding: 20px 100px;
+    text-align: center;
+    vertical-align: top;
+}
+
+#info-div {
+    width: 100%;
+    /* float: left; */
+    text-align: center;
+    margin: 0 auto;
+}
+
+#info-div-text {
+    font-size: 30px;
+    margin: 0 auto;
+    width: 80%;
+    text-align: center;
 }
 
 
+#list-div {
+    font-size: 24px;
+    width: 50%;
+    display: table;
+    margin: 0 auto;
+}
 
-#button-div {
+
+/* #button-div {
     text-align: center;
     display: grid;
     grid-gap: 1rem;
     
-}
-
+} */
+/* 
 #button-div button {
     background-color: rgba(0,0,0,0);
     border:0.1em solid black;
@@ -57,12 +118,7 @@ div {
     color:white;
     background-color:black;
     
-}
-
-#pair-graphs-div {
-    float: left;
-    text-align: center;
-}
+} */
 
 #hover-text {
     pointer-events: none;
@@ -88,7 +144,3 @@ div {
 .titles {
     fill: white;
 }
-
-
-
-

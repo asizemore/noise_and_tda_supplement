@@ -282,9 +282,10 @@
                         .merge(d3.selectAll(".threshline"))
                         .transition()
                         .duration(1000)
-                        .attr("d", function(d) {console.log(d); return `M ${x_scale(d/nEdges)} ${y_scale(0)} L ${x_scale(d/nEdges)} ${y_scale(max_y+buffer)}`})
+                        .attr("d", function(d) {console.log(d); return `M ${x_scale(d/2415)} ${y_scale(0)} L ${x_scale(d/2415)} ${y_scale(max_y+buffer)}`})
                         .attr("stroke", "black")
-                        .attr("stroke-width", 2);
+                        .attr("stroke-width", 2)
+                        .attr("opacity", 1);
 
                     let model_rect = svg.selectAll(".real-rect").data([threshold_edge])
                     model_rect.enter()

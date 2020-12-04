@@ -8,23 +8,50 @@
 
 <body style="background-color:#041011">
     <div id="title-div">
-        <h1> Weighted probabilistic triangle graphs (Supplement) </h1>
+        <h1> Classification results for project on noise added to networks (in development) </h1>
     </div>
 
-    <div id="svg-div">
-        <svg width="600" height="600" id="svg0"></svg>
+    <div id="plots-div">
+
+        <div id="svg-div">
+            <svg width="600" height="600" id="svg0"></svg>
+        </div>
+
+        <div id="pair-graphs-div">
+            <svg width="400" height="400" id="svg-pair1"></svg>
+            <svg width="400" height="400" id="svg-pair2"></svg>
+        </div>
+
+
+        <!-- <button id="back-button">Back</button> -->
+        <div id="threshold-div">
+            <h3>Threshold <i>ρ<sub>T</sub></i></h3>
+            <input id="slider-range" type="range" min="0" max="16" step="1" value="9">
+        </div>
+        <!-- <button id="next-button">Next</button> -->
+
     </div>
 
-    <div id="pair-graphs-div">
-        <svg width="400" height="400" id="svg-pair1"></svg>
-        <svg width="400" height="400" id="svg-pair2"></svg>
+    <div id="info-div">
+        <div id="info-div-text">
+            <i>(Left)</i> Confusion matrix showing the number of correct predictions (diagonal elements, green) and incorrect predictions (off diagonal elements, pink). <b>Hover</b>
+            over boxes to see the precise number (out of 250). <b>Click</b> on the boxes to bring up the associated Betti curves <i>(Right)</i>. Betti curves shown for dimensions 1-4.
+            <b>Drag</b> the threshold slider to see results for different threshold values <i>ρ<sub>T</sub></i>. Current threshold value shown as vertical dotted line in
+             the Betti curve plots.<br> <br>
+
+                <!-- <div id="list-div">
+
+                    <ul>
+                        <li><i>Hover</i> over squares to see the number of times the corresponding true model was classified as the corrsponding predicted model.<br><br></li>
+                        <li><i>Click</i> on a square within the confusion matrix on the left to bring up the corresponding averaged Betti curves on the right.<br><br></li>
+                        <li><i>Drag</i> the slider on the right to see how changing the threshold parameter affects the classification results.<br><br></li>
+                    </ul>
+
+                </div> -->
+
+        </div>
+
     </div>
-
-
-    <!-- <button id="back-button">Back</button> -->
-    <h3>Threshold</h3>
-    <input id="slider-range" type="range" min="0" max="16" step="1" value="0">
-    <!-- <button id="next-button">Next</button> -->
 
 
     <script src="https://d3js.org/d3.v4.min.js"></script>

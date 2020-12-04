@@ -29,14 +29,12 @@
 
             if (error) throw error;
 
-            console.log(dict)
 
             d3.json("../data/noiseOnly_k4_stdev.json", function(error, dict_no) {
             // d3.json("../processed_data/foo4_noiseOnly.json", function(error, dict_no) {
 
                 if (error) throw error;
 
-                console.log(dict_no)
                     
                 
 
@@ -45,7 +43,6 @@
                 console.log("hello")
 
                 let model = "cosineGeometric"
-                console.log(dict[model])
 
 
                 // Pick one threshold and draw on the svg
@@ -105,7 +102,7 @@
                             "translate(" + (margin) + " ," + 
                                         (height/2) + ")")
                     .style("text-anchor", "middle")
-                    .text("β");
+                    .text("β_k");
 
                 
                 // Draw line graph
@@ -286,7 +283,8 @@
                         .attr("d", function(d) {console.log(d); return `M ${x_scale(d/2415)} ${y_scale(0)} L ${x_scale(d/2415)} ${y_scale(max_y+buffer)}`})
                         .attr("stroke", "black")
                         .attr("stroke-width", 2)
-                        .attr("opacity", 1);
+                        .attr("opacity", 1)
+                        .attr("stroke-dasharray", "10,10");
 
                     let model_rect = svg.selectAll(".real-rect").data([threshold_edge])
                     model_rect.enter()
@@ -404,7 +402,7 @@
 
 
                 
-                var dropdown = d3.select("#dropdown")
+                let dropdown = d3.select("#dropdown")
                     .insert("select", "svg")
                     .on("change", dropdownChange);
 
@@ -415,6 +413,9 @@
                     .text(function (d) {
                         return d[0].toUpperCase() + d.slice(1,d.length); // capitalize 1st letter
                     });
+
+                dropdown.append("text")
+                    .text("Model")
 
                 d3.select("#next-button")
                     .on("click",next_button)

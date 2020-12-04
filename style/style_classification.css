@@ -92,6 +92,25 @@ ul {
     margin: 0 auto;
 }
 
+button {
+    background-color: rgba(0,0,0,0);
+    border:0.1em solid black;
+    padding:0.15em 1.2em;
+    margin:0 0.1em 0.1em 0;
+    border-radius:0.12em;
+    box-sizing: border-box;
+    color: gray;
+    transition: all 0.2s;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+}
+
+button:hover {
+    color:white;
+    background-color:black;
+    
+}
 
 /* #button-div {
     text-align: center;

@@ -21,7 +21,6 @@
         const real_color = "#B48677";
         const noise_color = "#BFA658";
 
-        // const model_names = ["20-clique", "clique", "30-clique", "5-clique", "10-clique", "2-clique", "35-clique", ""]
 
 
 
@@ -36,11 +35,6 @@
 
             const models = Object.keys(dict)
             console.log(models)
-            const models_clean = models.map(model => {
-                let k = model.split("lique")[1];
-                return k ? (k+"-clique") : "clique"});
-
-
 
             console.log("hello")
 
@@ -315,7 +309,7 @@
                 .text(function (d) {
                     // return d[0].toUpperCase() + d.slice(1,d.length); // capitalize 1st letter
                     let k = d.split("lique")[1];
-                    return k ? (k+"-clique") : "Clique"
+                    return k ? (k+"-clique") : "Clique";
                 });
 
             dropdown.append("text")

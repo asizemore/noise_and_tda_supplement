@@ -25,13 +25,11 @@
 
 
         d3.json("../data/main_k4_stdev.json", function(error, dict) {
-            // d3.json("../processed_data/foo4.json", function(error, dict) {
 
             if (error) throw error;
 
 
             d3.json("../data/noiseOnly_k4_stdev.json", function(error, dict_no) {
-            // d3.json("../processed_data/foo4_noiseOnly.json", function(error, dict_no) {
 
                 if (error) throw error;
 

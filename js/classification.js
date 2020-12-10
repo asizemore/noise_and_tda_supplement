@@ -15,7 +15,7 @@
         height = +svg.attr("height")
 
         // Data things
-        const nEdges = 805;
+        const nEdges = 604;
         const nEdges_total = 2415;
         const betti_colors = ["#243A4C", "#406372", "#66939E", "#9BC3C6"];
 
@@ -140,7 +140,7 @@
 
 
         d3.csv("../data/classification_all_101220.csv", function(error, data) {
-            d3.json("../data/main_k3.json", function(error, bettis) {
+            d3.json("../data/main_k4.json", function(error, bettis) {
             
 
 

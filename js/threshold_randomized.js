@@ -10,26 +10,29 @@
             activeClassName = 'active-d3-item';
 
 
-        svg_rand = d3.select("#svg-no")
+        svg_no = d3.select("#svg-no")
 
         console.log("hello")
 
+        // Data things
+        const nEdges = 604;
+        const nEdges_total = 2415;
+        const betti_colors = ["#243A4C", "#406372", "#66939E", "#9BC3C6"];
+        const real_color = "#B48677";
+        const noise_color = "#BFA658";
 
 
 
-        // d3.json("files/theme/foo4.json", function(error, dict) {
-        d3.json("../data/foo4.json", function(error, dict) {
+
+        d3.json("../data/main_k4_stdev.json", function(error, dict) {
 
             if (error) throw error;
 
-            console.log(dict)
 
-            // d3.json("files/theme/foo4_randomized.json", function(error, dict_rand) {
-            d3.json("../data/foo4_randomized.json", function(error, dict_rand) {
+            d3.json("../data/randomizd_k4_stdev.json", function(error, dict_no) {
 
                 if (error) throw error;
 
-                console.log(dict_rand)
                     
                 
 
@@ -38,7 +41,6 @@
                 console.log("hello")
 
                 let model = "cosineGeometric"
-                console.log(dict[model])
 
 
                 // Pick one threshold and draw on the svg
@@ -56,14 +58,14 @@
                 let y_scale = d3.scaleLinear().range([500,100]);
                 let yAxis = d3.axisLeft().scale(y_scale);
 
-                let y_scale_rand = d3.scaleLinear().range([500,100]);
-                let yAxis_rand = d3.axisLeft().scale(y_scale_rand);
+                let y_scale_no = d3.scaleLinear().range([500,100]);
+                let yAxis_no = d3.axisLeft().scale(y_scale_no);
                 svg.append("g")
                     .attr("class","myYaxis")
                     .attr("transform", `translate(100,0)`);
 
-                svg_rand.append("g")
-                    .attr("class","myYaxis_rand")
+                svg_no.append("g")
+                    .attr("class","myYaxis_no")
                     .attr("transform", "translate(100,0)");
 
                 // Draw axis labels
@@ -84,7 +86,7 @@
                     .style("text-anchor", "middle")
                     .text("β_k");
 
-                svg_rand.append("text") 
+                svg_no.append("text") 
                     .attr("class","axis-title")            
                     .attr("transform",
                             "translate(" + (width/2) + " ," + 
@@ -92,13 +94,13 @@
                     .style("text-anchor", "middle")
                     .text("Edge density");
 
-                svg_rand.append("text") 
+                svg_no.append("text") 
                     .attr("class","axis-title")            
                     .attr("transform",
                             "translate(" + (margin) + " ," + 
                                         (height/2) + ")")
                     .style("text-anchor", "middle")
-                    .text("β");
+                    .text("β_k");
 
                 
                 // Draw line graph
@@ -115,7 +117,7 @@
                     .attr("transform", `translate(0,${height-100})`)
                     .call(d3.axisBottom(x_scale));
 
-                svg_rand.append("g")
+                svg_no.append("g")
                     .attr("class", "xaxis")
                     .attr("transform", `translate(0,${height-100})`)
                     .call(d3.axisBottom(x_scale));
@@ -129,47 +131,41 @@
                     .style("text-anchor", "middle")
                     .text("Model + added noise");
 
-                svg_rand.append("text") 
+                svg_no.append("text") 
                     .attr("class","title")            
                     .attr("transform",
                             "translate(" + (width/2) + " ," + 
                                         (margin) + ")")
                     .style("text-anchor", "middle")
-                    .text("Randomized model edge weights");
+                    .text("Randomized model weights + added noise");
     
 
                 
 
 
-                // Draw data
-                const betti_colors = ["#243A4C", "#406372", "#66939E", "#9BC3C6"];
-                const real_color = "#B48677";
-                const noise_color = "#BFA658";
-                const nEdges = 2415;
-
-                const update_threshold_plot = (data, data_rand, threshold_edge) => {
+                const update_threshold_plot = (data, data_no, threshold_edge) => {
 
 
                    
                     let max_y = d3.max([d3.max(data.dim1), d3.max(data.dim2), d3.max(data.dim3), d3.max(data.dim4)]);
-                    let max_y_rand = d3.max([d3.max(data_rand.dim1), d3.max(data_rand.dim2), d3.max(data_rand.dim3), d3.max(data_rand.dim4)]);
+                    let max_y_no = d3.max([d3.max(data_no.dim1), d3.max(data_no.dim2), d3.max(data_no.dim3), d3.max(data_no.dim4)]);
                     console.log(max_y)
                     let buffer = max_y*(0.4)
-                    let buffer_rand = max_y_rand*(0.4)
+                    let buffer_no = max_y_no*(0.4)
 
                     
                     y_scale.domain([0, max_y+buffer]);
-                    y_scale_rand.domain([0, max_y_rand+buffer_rand]);
+                    y_scale_no.domain([0, max_y_no+buffer_no]);
 
                     svg.selectAll(".myYaxis")
                         .transition()
                         .duration(1000)
                         .call(yAxis);
 
-                    svg_rand.selectAll(".myYaxis_rand")
+                    svg_no.selectAll(".myYaxis_no")
                         .transition()
                         .duration(1000)
-                        .call(yAxis_rand);
+                        .call(yAxis_no);
 
 
                     let area = function(dimn) {
@@ -181,13 +177,13 @@
                         .y1(function(d,i) { return y_scale(data[`dim${dimn}`][i] + d); }); 
                     };
 
-                    let area_rand = function(dimn) {
+                    let area_no = function(dimn) {
                         
                         return d3.area()
                         .x(function(d, i) {return x_scale(i/nEdges); }) 
                         .y0(function(d,i) {
-                            return ((data_rand[`dim${dimn}`][i] - d > 0) ? y_scale_rand(data_rand[`dim${dimn}`][i] - d) : y_scale_rand(0)); })
-                        .y1(function(d,i) { return y_scale_rand(data_rand[`dim${dimn}`][i] + d); }); 
+                            return ((data_no[`dim${dimn}`][i] - d > 0) ? y_scale_no(data_no[`dim${dimn}`][i] - d) : y_scale_no(0)); })
+                        .y1(function(d,i) { return y_scale_no(data_no[`dim${dimn}`][i] + d); }); 
                     };
 
                 
@@ -202,15 +198,15 @@
                         std3: svg.selectAll(".std3").data([data.std3]),
                         std4: svg.selectAll(".std4").data([data.std4])};
 
-                    let lines_rand = {line1: svg_rand.selectAll(".dim1_rand").data([data_rand.dim1]),
-                        line2: svg_rand.selectAll(".dim2_rand").data([data_rand.dim2]),
-                        line3: svg_rand.selectAll(".dim3_rand").data([data_rand.dim3]),
-                        line4: svg_rand.selectAll(".dim4_rand").data([data_rand.dim4])};
+                    let lines_no = {line1: svg_no.selectAll(".dim1_no").data([data_no.dim1]),
+                        line2: svg_no.selectAll(".dim2_no").data([data_no.dim2]),
+                        line3: svg_no.selectAll(".dim3_no").data([data_no.dim3]),
+                        line4: svg_no.selectAll(".dim4_no").data([data_no.dim4])};
 
-                    let std_areas_rand = {std1: svg_rand.selectAll(".std1_rand").data([data_rand.std1]),
-                        std2: svg_rand.selectAll(".std2_rand").data([data_rand.std2]),
-                        std3: svg_rand.selectAll(".std3_rand").data([data_rand.std3]),
-                        std4: svg_rand.selectAll(".std4_rand").data([data_rand.std4])};
+                    let std_areas_no = {std1: svg_no.selectAll(".std1_no").data([data_no.std1]),
+                        std2: svg_no.selectAll(".std2_no").data([data_no.std2]),
+                        std3: svg_no.selectAll(".std3_no").data([data_no.std3]),
+                        std4: svg_no.selectAll(".std4_no").data([data_no.std4])};
 
 
                     for (let index = 0; index < 4; index++) {
@@ -244,30 +240,30 @@
                             .attr("fill", betti_colors[index])
 
 
-                        lines_rand[`line${index+1}`].enter()
+                        lines_no[`line${index+1}`].enter()
                             .append("path")
                                 .attr("class","dims")
-                                .attr("class",`dim${index+1}_rand`)
-                                .merge(d3.selectAll(`.dim${index+1}_rand`))
+                                .attr("class",`dim${index+1}_no`)
+                                .merge(d3.selectAll(`.dim${index+1}_no`))
                                 .transition()
                                 .duration(1000)
                                 .attr("d", d3.line()
                                     .x(function(d, i) {return x_scale(i/nEdges); })
-                                    .y(function(d) {return y_scale_rand(d); }))
+                                    .y(function(d) {return y_scale_no(d); }))
                                 .attr("stroke", betti_colors[index])
                                 .attr("fill", "none")
                                 .attr("stroke-width", 3);
 
 
                         
-                        std_areas_rand[`std${index+1}`].enter()
+                        std_areas_no[`std${index+1}`].enter()
                             .append("path")
                             .attr("class","stds")
-                            .attr("class",`std${index+1}_rand`)
-                            .merge(d3.selectAll(`.std${index+1}_rand`))
+                            .attr("class",`std${index+1}_no`)
+                            .merge(d3.selectAll(`.std${index+1}_no`))
                             .transition()
                             .duration(1000)
-                            .attr("d",area_rand(index+1))
+                            .attr("d",area_no(index+1))
                             .attr("opacity", 0.2)
                             .attr("fill", betti_colors[index])
                     }
@@ -282,20 +278,24 @@
                         .merge(d3.selectAll(".threshline"))
                         .transition()
                         .duration(1000)
-                        .attr("d", function(d) {console.log(d); return `M ${x_scale(d/nEdges)} ${y_scale(0)} L ${x_scale(d/nEdges)} ${y_scale(max_y+buffer)}`})
+                        .attr("d", function(d) {console.log(d); return `M ${x_scale(d/2415)} ${y_scale(0)} L ${x_scale(d/2415)} ${y_scale(max_y+buffer)}`})
                         .attr("stroke", "black")
-                        .attr("stroke-width", 2);
+                        .attr("stroke-width", 2)
+                        .attr("opacity", 1)
+                        .attr("stroke-dasharray", "10,10");
 
-                    let threshold_line_rand = svg_rand.selectAll(".threshline-rand").data([threshold_edge]);
-                    threshold_line_rand.enter()
+                    let threshold_line_rand = svg_no.selectAll(".threshline_rand").data([threshold_edge]);
+                        threshold_line_rand.enter()
                             .append("path")
-                            .attr("class", "threshline-rand")
-                            .merge(d3.selectAll(".threshline-rand"))
+                            .attr("class", "threshline_rand")
+                            .merge(d3.selectAll(".threshline_rand"))
                             .transition()
                             .duration(1000)
-                            .attr("d", function(d) {console.log(d); return `M ${x_scale(d/nEdges)} ${y_scale(0)} L ${x_scale(d/nEdges)} ${y_scale(max_y+buffer)}`})
+                            .attr("d", function(d) {console.log(d); return `M ${x_scale(d/2415)} ${y_scale(0)} L ${x_scale(d/2415)} ${y_scale(max_y+buffer)}`})
                             .attr("stroke", "black")
-                            .attr("stroke-width", 2);
+                            .attr("stroke-width", 2)
+                            .attr("opacity", 1)
+                            .attr("stroke-dasharray", "10,10");
 
                     let model_rect = svg.selectAll(".real-rect").data([threshold_edge])
                     model_rect.enter()
@@ -308,7 +308,7 @@
                         .attr("y", `${height - 70}`)
                         .attr("height", 7)
                         .attr("fill", real_color)
-                        .attr("width", function() {return x_scale(threshold_edge/nEdges)- 100 - 5});
+                        .attr("width", function() {return x_scale(threshold_edge/nEdges_total)- 100 - 5});
 
                     let noise_rect = svg.selectAll(".noise-rect").data([threshold_edge])
                     noise_rect.enter()
@@ -317,37 +317,51 @@
                         .merge(svg.selectAll(".noise-rect"))
                         .transition()
                         .duration(1000)
-                        .attr("x", function() {return 5+ x_scale(threshold_edge/nEdges)})
+                        .attr("x", function() {return 5+ x_scale(threshold_edge/nEdges_total)})
                         .attr("y", `${height - 70}`)
                         .attr("height", 7)
                         .attr("fill", noise_color)
-                        .attr("width", function() {return 500 - x_scale(threshold_edge/nEdges)});
+                        .attr("width", function() {return 500 - x_scale(threshold_edge/nEdges_total)});
 
-                    let rand_rect = svg_rand.selectAll(".rand-rect").data([threshold_edge])
-                    rand_rect.enter()
-                        .append("rect")
-                        .attr("class","rand-rect")
-                        .merge(svg_rand.selectAll(".rand-rect"))
-                        .transition()
-                        .duration(1000)
-                        .attr("x", 100)
-                        .attr("y", `${height - 70}`)
-                        .attr("height", 7)
-                        .attr("fill", real_color)
-                        .attr("width", function() {return x_scale(threshold_edge/nEdges) - 100 - 5});
 
-                    let noise_rand_rect = svg_rand.selectAll(".nr-rect").data([threshold_edge])
-                        noise_rand_rect.enter()
+                    let model_rect_rand = svg_no.selectAll(".real-rect_rand").data([threshold_edge])
+                        model_rect_rand.enter()
                             .append("rect")
-                            .attr("class","nr-rect")
-                            .merge(svg_rand.selectAll(".nr-rect"))
+                            .attr("class","real-rect_rand")
+                            .merge(svg_no.selectAll(".real-rect_rand"))
                             .transition()
                             .duration(1000)
-                            .attr("x", function() {return 5+ x_scale(threshold_edge/nEdges)})
+                            .attr("x", 100)
+                            .attr("y", `${height - 70}`)
+                            .attr("height", 7)
+                            .attr("fill", real_color)
+                            .attr("width", function() {return x_scale(threshold_edge/nEdges_total)- 100 - 5});
+    
+                    let noise_rect_rand = svg_no.selectAll(".noise-rect_rand").data([threshold_edge])
+                        noise_rect_rand.enter()
+                            .append("rect")
+                            .attr("class","noise-rect_rand")
+                            .merge(svg_no.selectAll(".noise-rect_rand"))
+                            .transition()
+                            .duration(1000)
+                            .attr("x", function() {return 5+ x_scale(threshold_edge/nEdges_total)})
                             .attr("y", `${height - 70}`)
                             .attr("height", 7)
                             .attr("fill", noise_color)
-                            .attr("width", function() {return 500 - x_scale(threshold_edge/nEdges)});
+                            .attr("width", function() {return 500 - x_scale(threshold_edge/nEdges_total)});
+
+                    // let noise_rect_no = svg_no.selectAll(".noise-rect").data([threshold_edge])
+                    // noise_rect_no.enter()
+                    //     .append("rect")
+                    //     .attr("class","noise-rect")
+                    //     .merge(svg_no.selectAll(".noise-rect"))
+                    //     .transition()
+                    //     .duration(1000)
+                    //     .attr("x", 100)
+                    //     .attr("y", `${height - 70}`)
+                    //     .attr("height", 7)
+                    //     .attr("fill", noise_color)
+                    //     .attr("width", function() {return x_scale((nEdges_total - threshold_edge)/nEdges_total) - 100});
 
 
 
@@ -360,7 +374,7 @@
                 let edge_num = 242;
                 let value_edge = 0;
                 
-                update_threshold_plot(dict[model][edge_num],dict_rand[model][edge_num], edge_num);
+                update_threshold_plot(dict[model][edge_num],dict_no[model][edge_num], edge_num);
 
 
                 let changed = function() {
@@ -368,7 +382,7 @@
                     console.log(value_edge);
                     console.log(model)
                     edge_num = Number(threshold_vals[value_edge]);
-                    update_threshold_plot(dict[model][edge_num], dict_rand[model][edge_num], edge_num);
+                    update_threshold_plot(dict[model][edge_num], dict_no[model][edge_num], edge_num);
 
                 };
 
@@ -379,12 +393,12 @@
                     console.log(value_edge);
                     console.log(model)
                     edge_num = Number(threshold_vals[value_edge]);
-                    update_threshold_plot(dict[model][edge_num],dict_rand[model][edge_num], edge_num);
+                    update_threshold_plot(dict[model][edge_num],dict_no[model][edge_num], edge_num);
+
 
                     // Set input to appropriate value
                     let slider_bar = document.getElementById("slider-range");
                     slider_bar.value = value_edge;
-
 
                 };
 
@@ -395,12 +409,12 @@
                     console.log(value_edge);
                     console.log(model)
                     edge_num = Number(threshold_vals[value_edge]);
-                    update_threshold_plot(dict[model][edge_num],dict_rand[model][edge_num], edge_num);
-                    
+                    update_threshold_plot(dict[model][edge_num],dict_no[model][edge_num], edge_num);
+
+
                     // Set input to appropriate value
                     let slider_bar = document.getElementById("slider-range");
                     slider_bar.value = value_edge;
-
 
             };
 
@@ -410,7 +424,9 @@
                     console.log(model)
                     console.log(edge_num)
 
-                    update_threshold_plot(dict[model][edge_num],dict_rand[model][edge_num], edge_num);
+                    update_threshold_plot(dict[model][edge_num],dict_no[model][edge_num], edge_num);
+
+
                     
                 };
 
@@ -424,7 +440,7 @@
 
 
                 
-                var dropdown = d3.select("#dropdown")
+                let dropdown = d3.select("#dropdown")
                     .insert("select", "svg")
                     .on("change", dropdownChange);
 
@@ -435,6 +451,9 @@
                     .text(function (d) {
                         return d[0].toUpperCase() + d.slice(1,d.length); // capitalize 1st letter
                     });
+
+                dropdown.append("text")
+                    .text("Model")
 
                 d3.select("#next-button")
                     .on("click",next_button)

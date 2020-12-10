@@ -25,7 +25,7 @@
 
 
         d3.json("../data/clique_k4_stdev.json", function(error, dict) {
-        // d3.json("../processed_data/foo4_noiseOnly.json", function(error, dict_no) {
+
 
             if (error) throw error;
 
@@ -178,6 +178,8 @@
                         .attr("opacity", 0.2)
                         .attr("fill", betti_colors[index])
 
+                }
+
 
 
 
@@ -270,7 +272,7 @@
                 let slider_bar = document.getElementById("slider-range");
                 slider_bar.value = value_edge;
 
-        };
+            };
 
 
             const dropdownChange = function() {
@@ -318,4 +320,4 @@
 
 
 
-        })
+        });

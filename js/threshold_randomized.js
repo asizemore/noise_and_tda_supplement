@@ -137,7 +137,7 @@
                             "translate(" + (width/2) + " ," + 
                                         (margin) + ")")
                     .style("text-anchor", "middle")
-                    .text("Added noise only");
+                    .text("Randomized model weights + added noise");
     
 
                 

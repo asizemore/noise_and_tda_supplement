@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+    <link rel="stylesheet" href="../style/style_comparison.css">
+    <!-- <link rel="stylesheet" href="../style/style.css"> -->
+</head>
+
+<body style="background-color:rgb(250, 248, 239)">
+    <div id="title-div">
+        <h1> m-clique graph models </h1>
+    </div>
+
+    <div id="svg-div">
+        <svg width="600" height="600" id="svg0"></svg>
+    </div>
+
+
+    <div id="input-div">
+
+        <div id="dropdown"><h3>Model</h3></div>
+
+        <div id="slider-div">
+            <h3>Threshold <i>ρ<sub>T</sub></i></h3> <br>
+
+            <button id="back-button">Back</button>
+            <input id="slider-range" type="range" min="0" max="16" step="1" value="0">
+            <button id="next-button">Next</button>
+        </div>
+    </div>
+
+    <div id="info-div">
+        <div id="info-div-text">
+            <i>(Left)</i> Betti curves for dimensions 1-4 describing the persistent homology of the model (rose) + added noise (gold) combination network (see Fig. 1-3). 
+            <i>(Right)</i> Betti curves of the corresponding added noise isolated network (see Fig. 4). <b>Select</b> model using the dropdown menu.
+            <b>Drag</b> the threshold slider to see results for different threshold values <i>ρ<sub>T</sub></i>. Current threshold value shown as vertical dotted line in
+             the Betti curve plots. <br> <br>
+
+
+        </div>
+
+    </div>
+
+
+
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://unpkg.com/d3-simple-slider"></script>
+
+
+    <script src="../js/threshold_no.js"></script>
+    <!-- <script src="../js/threshold_no.js"></script> -->
+
+
+</body>

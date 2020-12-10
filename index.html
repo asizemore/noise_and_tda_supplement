@@ -11,18 +11,30 @@
         <h1> Supplementary figures for "Noisy networks are graphs, too", 2020 </h1>
     </div>
 
+    <div id="intro-div">
+        <img src="images/fig_intros-01.png" alt="Data contains real connections and noise from observations. Our experiments adress how noise affects data analyses
+        by adding noise to model weighted networks." width="30%">
+        <br><br>
+        <p>Real data, such as from the structural brain network, is often assumed to consist of strong, likely real, edges and weak edges that could possibly be noise. 
+        In our project, we will add noise to a model network (navy) that has been thresholded to a specified edge density <i>ρ<sub>T</sub></i> (rose). For any edges not in the rose
+        network, we will add random weights to these edges and thus create an network of added noise (gold). We can then measure the affect of noise on the structure of the
+        combined network by expanding the weighted network into a sequence of binary networks and computing our favorite graph metric. If we create this sequence of graphs
+        (right) by adding edges according to decreasing edge weights, we can see first the structure of the model edges, <i>then</i> after <i>ρ<sub>T</sub></i> we will
+        see how randomly added edges will affect the structure as perceived by the graph descriptor. </p>
+    </div>
+
     <div id="button-div">
-        <h3> Visit the pages below for interactive figures.</h3>
-        <a href="templates/clique_graphs.html" class="buttonmain"><button>Clique graphs</button></a>
-        <a href="templates/wpTriangle_graphs.html" class="buttonmain"><button>Weighted Triangle graphs</button></a>
-        <a href="templates/thresholded_graphs_no.html" class="buttonmain"><button>All thresholds, noise only graphs</button></a>
-        <a href="templates/thresholded_graphs_randomized.html" class="buttonmain"><button>All thresholds, randomized graphs</button></a>
-        <a href="templates/classification.html" class="buttonmain"><button>classification</button></a>
+        <h3> Visit the pages below for interactive figures showing results of various experiments performed in this project.</h3>
+        <!-- <a href="templates/clique_graphs.html" class="buttonmain"><button><i>m</i>-clique model (dev)</button></a> -->
+        <!-- <a href="templates/wpTriangle_graphs.html" class="buttonmain"><button>Weighted Triangle model (dev)</button></a> -->
+        <a href="templates/thresholded_graphs_no.html" class="buttonmain"><button>Main models <i>vs.</i> added noise</button></a>
+        <!-- <a href="templates/thresholded_graphs_randomized.html" class="buttonmain"><button>Main models <i>vs.</i> randomized (dev)</button></a> -->
+        <a href="templates/classification.html" class="buttonmain"><button>Classification</button></a>
     </div>
 
     <!-- <script src="../js/threshold_no.js"></script> -->
     <div>
-        Looking for the main text? Clique here for the arxiv version.
+        Looking for the main text? Link will become available here when the paper is posted.
     </div>
 
     <!-- ADD LINK TO MAIN PAPER HERE -->

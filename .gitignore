@@ -12,7 +12,7 @@
 .Rhistory
 .sif
 .bash_history
-*.csv
+# *.csv
 .DS_Store
 
 

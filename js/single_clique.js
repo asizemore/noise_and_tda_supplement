@@ -24,8 +24,9 @@
 
 
 
+
         d3.json("../data/clique_k4_stdev.json", function(error, dict) {
-        // d3.json("../processed_data/foo4_noiseOnly.json", function(error, dict_no) {
+
 
             if (error) throw error;
 
@@ -34,6 +35,7 @@
 
             const models = Object.keys(dict)
             console.log(models)
+
             console.log("hello")
 
             let model = "clique"
@@ -178,6 +180,8 @@
                         .attr("opacity", 0.2)
                         .attr("fill", betti_colors[index])
 
+                }
+
 
 
 
@@ -270,7 +274,7 @@
                 let slider_bar = document.getElementById("slider-range");
                 slider_bar.value = value_edge;
 
-        };
+            };
 
 
             const dropdownChange = function() {
@@ -303,7 +307,9 @@
                 .enter().append("option")
                 .attr("value", function (d) { return d; })
                 .text(function (d) {
-                    return d[0].toUpperCase() + d.slice(1,d.length); // capitalize 1st letter
+                    // return d[0].toUpperCase() + d.slice(1,d.length); // capitalize 1st letter
+                    let k = d.split("lique")[1];
+                    return k ? (k+"-clique") : "Clique";
                 });
 
             dropdown.append("text")
@@ -318,4 +324,4 @@
 
 
 
-        })
+        });

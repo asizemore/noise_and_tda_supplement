@@ -64,7 +64,8 @@
         svg2.append("g")
         .attr("id","yaxis2")
         .attr("class","axis")
-        .attr("transform","translate(" + (svg_pair_s-35) + ",0)");
+        .attr("transform", `translate(65,0)`);
+        // .attr("transform","translate(" + (svg_pair_s-35) + ",0)");
         
         
         // Draw axes
@@ -109,6 +110,14 @@
             .text("Edge density");
 
         svg1.append("text") 
+            .attr("class","axis-labels")            
+            .attr("transform",
+                    "translate(" + 10 + " ," + 
+                                (svg_pair_s/2) + ")")
+            .attr("opacity", 0)
+            .text("β_k");
+
+        svg2.append("text") 
             .attr("class","axis-labels")            
             .attr("transform",
                     "translate(" + 10 + " ," + 
@@ -245,7 +254,7 @@
                         .merge(d3.selectAll(`#${thresh_line_class}`))
                         .transition()
                         .duration(1000)
-                        .attr("d", function(d) {return `M ${x_scale(1 - (d/nEdges_total))} ${y_scale(0)} L ${x_scale(1- (d/nEdges_total))} ${y_scale(max_y+buffer)}`})
+                        .attr("d", function(d) {return `M ${x_scale(d/nEdges_total)} ${y_scale(0)} L ${x_scale(d/nEdges_total)} ${y_scale(max_y+buffer)}`})
                         .attr("stroke", "white")
                         .attr("stroke-width", 2)
                         .attr("stroke-dasharray", "10,10");
@@ -291,7 +300,7 @@
                     svg2.selectAll("#yaxis2")
                         .transition()
                         .duration(1000)
-                        .call(d3.axisRight().scale(y_scale));
+                        .call(d3.axisLeft().scale(y_scale));
         
                     for (let index = 0; index < 4; index++) {
         
@@ -340,8 +349,7 @@
                     clicked_text.attr("class","clicked")
 
 
-                    // remove clicked class after 750ms. Your duration is 500ms,
-                    // so I'm padding it a bit although you can adjust this as needed
+                    // remove clicked class after 750ms.
                     setTimeout(function () { clicked_text.attr("class", null) }, 750);
         
 

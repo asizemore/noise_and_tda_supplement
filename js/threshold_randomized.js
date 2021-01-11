@@ -29,7 +29,7 @@
             if (error) throw error;
 
 
-            d3.json("../data/randomizd_k4_stdev.json", function(error, dict_no) {
+            d3.json("../data/randomized_k4_stdev.json", function(error, dict_no) {
 
                 if (error) throw error;
 
@@ -40,7 +40,7 @@
                 console.log(models)
                 console.log("hello")
 
-                let model = "cosineGeometric"
+                let model = models[0];
 
 
                 // Pick one threshold and draw on the svg

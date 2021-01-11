@@ -40,7 +40,7 @@
                 console.log(models)
                 console.log("hello")
 
-                let model = "cosineGeometric"
+                let model = models[0];
 
 
                 // Pick one threshold and draw on the svg

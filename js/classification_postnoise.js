@@ -349,8 +349,7 @@
                     clicked_text.attr("class","clicked")
 
 
-                    // remove clicked class after 750ms. Your duration is 500ms,
-                    // so I'm padding it a bit although you can adjust this as needed
+                    // remove clicked class after 750ms.
                     setTimeout(function () { clicked_text.attr("class", null) }, 750);
         
 

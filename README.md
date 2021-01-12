@@ -7,7 +7,7 @@
 
 ## Helpful links
 - Interactive visualization [site](https://asizemore.github.io/noise_and_tda_supplement/).
-- Main paper arxiv link.
+- Main paper arxiv [link](https://arxiv.org/pdf/2101.03933.pdf).
 - [Repository](https://github.com/asizemore/Noise_and_TDA) for the main calculations.
 
 
